@@ -28,6 +28,7 @@ def auth(request):
     request.session['nonce'] = nonce
     state = str(uuid.uuid4())
     request.session['state'] = state
+    print('nonce', nonce, 'state', state)
     login_url = backend.login_url(
         redirect_uri=redirect_uri,
         nonce=nonce,
@@ -43,9 +44,11 @@ def complete(request):
     method = 'GET' if backend.RESPONSE_MODE == 'fragment' else 'POST'
     original_state = request.session.get('state')
     state = getattr(request, method).get('state')
+    print('original', original_state, 'state', state, 'method', method)
     if original_state == state:
         token = getattr(request, method).get('id_token')
         nonce = request.session.get('nonce')
+        print('token', token, 'nonce', nonce)
         user = backend.authenticate(request=request, token=token, nonce=nonce)
         if user is not None:
             login(request, user)
