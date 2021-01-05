@@ -43,6 +43,7 @@ class AzureActiveDirectoryBackend(object):
             return None
 
         payload = get_token_payload(token=token, nonce=nonce)
+        print('payload {}'.format(payload))
         email = get_token_payload_email(payload)
 
         if email is None:

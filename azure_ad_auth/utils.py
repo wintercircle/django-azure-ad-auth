@@ -88,6 +88,7 @@ def get_token_payload(token=None, audience=CLIENT_ID, nonce=None):
             payload = jwt.decode(token, key=key, audience=audience)
 
             if payload['nonce'] != nonce:
+                print('nonce not valid {} != {}'.format(nonce, pyaload['nonce']))
                 continue
 
             return payload
@@ -102,5 +103,6 @@ def get_token_payload_email(payload, field_name = 'upn'):
 
 
 def get_token_payload_field(payload, field_name, def_value = None):
+    print('finding {} field'.format(field_name))
     return payload[field_name] if payload and field_name in payload else def_value
 
