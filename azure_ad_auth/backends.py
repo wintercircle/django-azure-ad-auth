@@ -39,6 +39,7 @@ class AzureActiveDirectoryBackend(object):
 
     def authenticate(self, request=None, token=None, nonce=None, **kwargs):
         if token is None:
+            print('no token')
             return None
 
         payload = get_token_payload(token=token, nonce=nonce)
@@ -71,6 +72,7 @@ class AzureActiveDirectoryBackend(object):
             return None
 
         user.backend = '{}.{}'.format(self.__class__.__module__, self.__class__.__name__)
+        print('user {}'.format(user.id))
         return user
 
     def get_user(self, user_id):
